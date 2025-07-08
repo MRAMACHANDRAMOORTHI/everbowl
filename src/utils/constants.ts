@@ -25,7 +25,7 @@ export const MENU_CATEGORIES = {
 }
 
 export const CONTACT_INFO = {
-  address: '2XFX+64 Coimbatore, Tamil Nadu',
+  address: 'Ever Bowl, 1A, Coral Castle Apartment, Block 1, Avinashi Road, Peelamedu, Coimbatore',
   phone: '+91 90802 64845',
   email: 'everbowlindia@gmail.com',
   hours: '8 AM – 11.59 PM (All Days)'

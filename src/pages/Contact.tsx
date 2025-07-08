@@ -1,11 +1,11 @@
-import React from 'react'
-import { motion } from 'framer-motion'
-import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react'
-import { Layout } from '../components/common/Layout'
-import { Card } from '../components/ui/Card'
-import { Button } from '../components/ui/Button'
-import { Input } from '../components/ui/Input'
-import { CONTACT_INFO } from '../utils/constants'
+import React from "react";
+import { motion } from "framer-motion";
+import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
+import { Layout } from "../components/common/Layout";
+import { Card } from "../components/ui/Card";
+import { Button } from "../components/ui/Button";
+import { Input } from "../components/ui/Input";
+import { CONTACT_INFO } from "../utils/constants";
 
 export const Contact: React.FC = () => {
   return (
@@ -24,7 +24,8 @@ export const Contact: React.FC = () => {
                 Get in <span className="text-emerald-600">Touch</span>
               </h1>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+                We'd love to hear from you. Send us a message and we'll respond
+                as soon as possible.
               </p>
             </motion.div>
           </div>
@@ -46,8 +47,8 @@ export const Contact: React.FC = () => {
                     Contact Information
                   </h2>
                   <p className="text-gray-600 text-lg leading-relaxed">
-                    Have a question about our menu, want to place a special order, or just want to say hello? 
-                    We're here to help!
+                    Have a question about our menu, want to place a special
+                    order, or just want to say hello? We're here to help!
                   </p>
                 </div>
 
@@ -58,7 +59,9 @@ export const Contact: React.FC = () => {
                         <MapPin className="w-6 h-6 text-emerald-600" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-gray-900 mb-2">Visit Us</h3>
+                        <h3 className="font-semibold text-gray-900 mb-2">
+                          Visit Us
+                        </h3>
                         <p className="text-gray-600">{CONTACT_INFO.address}</p>
                       </div>
                     </div>
@@ -70,7 +73,9 @@ export const Contact: React.FC = () => {
                         <Phone className="w-6 h-6 text-blue-600" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-gray-900 mb-2">Call Us</h3>
+                        <h3 className="font-semibold text-gray-900 mb-2">
+                          Call Us
+                        </h3>
                         <p className="text-gray-600">{CONTACT_INFO.phone}</p>
                       </div>
                     </div>
@@ -82,7 +87,9 @@ export const Contact: React.FC = () => {
                         <Mail className="w-6 h-6 text-purple-600" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-gray-900 mb-2">Email Us</h3>
+                        <h3 className="font-semibold text-gray-900 mb-2">
+                          Email Us
+                        </h3>
                         <p className="text-gray-600">{CONTACT_INFO.email}</p>
                       </div>
                     </div>
@@ -94,7 +101,9 @@ export const Contact: React.FC = () => {
                         <Clock className="w-6 h-6 text-yellow-600" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-gray-900 mb-2">Hours</h3>
+                        <h3 className="font-semibold text-gray-900 mb-2">
+                          Hours
+                        </h3>
                         <p className="text-gray-600">{CONTACT_INFO.hours}</p>
                       </div>
                     </div>
@@ -109,29 +118,16 @@ export const Contact: React.FC = () => {
                 transition={{ duration: 0.8 }}
               >
                 <Card className="p-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-6">
+                    Send us a Message
+                  </h3>
                   <form className="space-y-6">
                     <div className="grid md:grid-cols-2 gap-4">
-                      <Input
-                        type="text"
-                        placeholder="First Name"
-                        required
-                      />
-                      <Input
-                        type="text"
-                        placeholder="Last Name"
-                        required
-                      />
+                      <Input type="text" placeholder="First Name" required />
+                      <Input type="text" placeholder="Last Name" required />
                     </div>
-                    <Input
-                      type="email"
-                      placeholder="Email Address"
-                      required
-                    />
-                    <Input
-                      type="tel"
-                      placeholder="Phone Number"
-                    />
+                    <Input type="email" placeholder="Email Address" required />
+                    <Input type="tel" placeholder="Phone Number" />
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Subject
@@ -155,7 +151,12 @@ export const Contact: React.FC = () => {
                         required
                       />
                     </div>
-                    <Button type="submit" variant="primary" size="lg" className="w-full">
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      size="lg"
+                      className="w-full"
+                    >
                       Send Message
                       <Send className="w-5 h-5" />
                     </Button>
@@ -175,18 +176,16 @@ export const Contact: React.FC = () => {
               transition={{ duration: 0.8 }}
               className="text-center mb-12"
             >
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Find Us
-              </h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">Find Us</h2>
               <p className="text-xl text-gray-600">
                 Visit our kitchen in the heart of Peelamedu
               </p>
             </motion.div>
-            
+
             <Card className="overflow-hidden">
               <div className="h-96 relative">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.3267!2d76.9558!3d11.0168!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTHCsDAyJzAwLjAiTiA3NsKwNTcnMjEuMCJF!5e0!3m2!1sen!2sin!4v1234567890"
+                  src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d315.8334548832724!2d76.99806631850294!3d11.023063252939643!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sin!4v1751974543128!5m2!1sen!2sin"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
@@ -201,5 +200,5 @@ export const Contact: React.FC = () => {
         </section>
       </div>
     </Layout>
-  )
-}
+  );
+};

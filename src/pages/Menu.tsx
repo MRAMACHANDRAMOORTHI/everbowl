@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Search, Filter, Star, Plus } from 'lucide-react'
 import { Layout } from '../components/common/Layout'
@@ -109,7 +109,7 @@ export const Menu: React.FC = () => {
                   type="text"
                   placeholder="Search menu items..."
                   value={searchTerm}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-10"
                 />
               </div>

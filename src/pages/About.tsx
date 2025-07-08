@@ -1,7 +1,7 @@
-import { FC } from 'react'
-import { motion } from 'framer-motion'
-import { Leaf, Heart, Users, Award } from 'lucide-react'
-import { Layout } from '../components/common/Layout'
+import { FC } from "react";
+import { motion } from "framer-motion";
+import { Leaf, Heart, Users, Award } from "lucide-react";
+import { Layout } from "../components/common/Layout";
 
 export const About: FC = () => {
   return (
@@ -20,8 +20,9 @@ export const About: FC = () => {
                 Our <span className="text-emerald-600">Story</span>
               </h1>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Born in Peelamedu, Ever Bowl was founded to bring truly healthy, delicious organic food to everyone. 
-                From smoothie bowls to cold-pressed juices, every item is crafted with care.
+                Born in Peelamedu, Ever Bowl was founded to bring truly healthy,
+                delicious organic food to everyone. From smoothie bowls to
+                cold-pressed juices, every item is crafted with care.
               </p>
             </motion.div>
           </div>
@@ -40,9 +41,10 @@ export const About: FC = () => {
                   Our Mission
                 </h2>
                 <p className="text-gray-600 text-lg leading-relaxed mb-6">
-                  We believe that healthy eating shouldn't be complicated or compromise on taste. 
-                  Our mission is to make organic, nutritious food accessible to everyone while supporting 
-                  local farmers and sustainable practices.
+                  We believe that healthy eating shouldn't be complicated or
+                  compromise on taste. Our mission is to make organic,
+                  nutritious food accessible to everyone while supporting local
+                  farmers and sustainable practices.
                 </p>
                 <div className="grid grid-cols-2 gap-6">
                   <div className="flex items-center space-x-3">
@@ -50,8 +52,12 @@ export const About: FC = () => {
                       <Leaf className="w-5 h-5 text-emerald-600" />
                     </div>
                     <div>
-                      <div className="font-semibold text-gray-900">100% Organic</div>
-                      <div className="text-sm text-gray-600">Certified ingredients</div>
+                      <div className="font-semibold text-gray-900">
+                        100% Organic
+                      </div>
+                      <div className="text-sm text-gray-600">
+                        Certified ingredients
+                      </div>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3">
@@ -59,8 +65,12 @@ export const About: FC = () => {
                       <Heart className="w-5 h-5 text-red-600" />
                     </div>
                     <div>
-                      <div className="font-semibold text-gray-900">Made with Love</div>
-                      <div className="text-sm text-gray-600">Hand-crafted daily</div>
+                      <div className="font-semibold text-gray-900">
+                        Made with Love
+                      </div>
+                      <div className="text-sm text-gray-600">
+                        Hand-crafted daily
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -92,28 +102,29 @@ export const About: FC = () => {
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
                 Our Values
               </h2>
-              <p className="text-xl text-gray-600">
-                What drives us every day
-              </p>
+              <p className="text-xl text-gray-600">What drives us every day</p>
             </motion.div>
 
             <div className="grid md:grid-cols-3 gap-8">
               {[
                 {
                   icon: Users,
-                  title: 'Community First',
-                  description: 'Supporting local farmers and building stronger communities through sustainable partnerships.'
+                  title: "Community First",
+                  description:
+                    "Supporting local farmers and building stronger communities through sustainable partnerships.",
                 },
                 {
                   icon: Award,
-                  title: 'Quality Excellence',
-                  description: 'Never compromising on quality. Every ingredient is carefully selected and every bowl is crafted to perfection.'
+                  title: "Quality Excellence",
+                  description:
+                    "Never compromising on quality. Every ingredient is carefully selected and every bowl is crafted to perfection.",
                 },
                 {
                   icon: Heart,
-                  title: 'Health & Wellness',
-                  description: 'Promoting healthy living through nutritious, delicious food that nourishes body and soul.'
-                }
+                  title: "Health & Wellness",
+                  description:
+                    "Promoting healthy living through nutritious, delicious food that nourishes body and soul.",
+                },
               ].map((value, index) => (
                 <motion.div
                   key={value.title}
@@ -125,8 +136,12 @@ export const About: FC = () => {
                   <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mb-6">
                     <value.icon className="w-6 h-6 text-emerald-600" />
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">{value.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">{value.description}</p>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                    {value.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    {value.description}
+                  </p>
                 </motion.div>
               ))}
             </div>
@@ -153,23 +168,29 @@ export const About: FC = () => {
             <div className="grid md:grid-cols-3 gap-8">
               {[
                 {
-                  name: 'Sarah Johnson',
-                  role: 'Founder & CEO',
-                  image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400',
-                  description: 'Nutritionist with 10+ years of experience in organic food industry.'
+                  name: "Sanjay Periyasamy",
+                  role: "Founder & CEO",
+                  image:
+                    "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400",
+                  description:
+                    "Visionary leader with a of experience in nutrition and organic food innovation, driving Ever Bowl’s mission for healthy living.",
                 },
                 {
-                  name: 'Michael Chen',
-                  role: 'Head Chef',
-                  image: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=400',
-                  description: 'Award-winning chef specializing in plant-based cuisine.'
+                  name: "Ramachandramoorthi",
+                  role: "CTO & Co-Founder",
+                  image:
+                    "https://wjkpvnyjfltgvaxpifnv.supabase.co/storage/v1/object/sign/images/msr.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9hMGQ3MTkyZS0yMTYzLTRhYzgtOGE1ZS1jZjM2YzVkZWZlOTIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvbXNyLmpwZyIsImlhdCI6MTc1MTk3NTQ3MCwiZXhwIjo3MDg3MTk3NTQ3MH0.rI4RPzuw1R8uNqQrFjHl0Yf9MwYyg3nurDzu5ZEPgjo",
+                  description:
+                    "Tech architect building Ever Bowl’s digital backbone, with deep expertise in full-stack development and real-time platform engineering.",
                 },
                 {
-                  name: 'Emily Rodriguez',
-                  role: 'Operations Manager',
-                  image: 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=400',
-                  description: 'Expert in sustainable supply chain and organic farming partnerships.'
-                }
+                  name: "Sanmuga Sudhan",
+                  role: "Operations Manager",
+                  image:
+                    "https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=400",
+                  description:
+                    "Specialist in supply chain and logistics, ensuring sustainable sourcing and efficient operations across Ever Bowl’s kitchen network.",
+                },
               ].map((member, index) => (
                 <motion.div
                   key={member.name}
@@ -184,8 +205,12 @@ export const About: FC = () => {
                     className="w-full h-64 object-cover"
                   />
                   <div className="p-6">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{member.name}</h3>
-                    <p className="text-emerald-600 font-medium mb-3">{member.role}</p>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                      {member.name}
+                    </h3>
+                    <p className="text-emerald-600 font-medium mb-3">
+                      {member.role}
+                    </p>
                     <p className="text-gray-600">{member.description}</p>
                   </div>
                 </motion.div>
@@ -195,5 +220,5 @@ export const About: FC = () => {
         </section>
       </div>
     </Layout>
-  )
-}
+  );
+};
