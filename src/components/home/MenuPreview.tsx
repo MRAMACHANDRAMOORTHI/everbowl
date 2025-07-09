@@ -1,167 +1,196 @@
-import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { ArrowRight, Star } from 'lucide-react'
-import { Card } from '../ui/Card'
-import { Button } from '../ui/Button'
-import { supabase } from '../../lib/supabase'
-import { MenuItem } from '../../lib/types'
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Plus, Star, Clock } from "lucide-react";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../config/firebase";
+import { MenuItem } from "../../types";
+import { useCart } from "../../contexts/CartContext";
+import { Card } from "../ui/Card";
+import { Button } from "../ui/Button";
+import { MENU_CATEGORIES } from "../../utils/constants";
 
-export const MenuPreview: React.FC = () => {
-  const [menuItems, setMenuItems] = useState<MenuItem[]>([])
-  const [loading, setLoading] = useState(true)
-  const [selectedCategory, setSelectedCategory] = useState('All')
+const MenuPreview: React.FC = () => {
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+  const [filteredItems, setFilteredItems] = useState<MenuItem[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>("all");
+  const [loading, setLoading] = useState(true);
+  const { addToCart } = useCart();
 
-  const categories = ['All', 'Smoothie Bowls', 'Cold Press Juices', 'Vegan Wraps', 'Energy Shots']
-
+  // Fetch from Firestore
   useEffect(() => {
-    fetchMenuItems()
-  }, [])
+    const fetchMenuItems = async () => {
+      try {
+        const menuRef = collection(db, "menu_items");
+        const q = query(menuRef, where("isAvailable", "==", true));
+        const snapshot = await getDocs(q);
+        const items = snapshot.docs.map(
+          (doc) => ({ id: doc.id, ...doc.data() } as MenuItem)
+        );
+        setMenuItems(items);
+        setFilteredItems(items); // initially show all
+      } catch (error) {
+        console.error("Error fetching menu items:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const fetchMenuItems = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('menu_items')
-        .select('*')
-        .eq('isavailable', true)
-        .limit(8)
+    fetchMenuItems();
+  }, []);
 
-      if (error) throw error
-      setMenuItems(data || [])
-    } catch (error) {
-      console.error('Error fetching menu items:', error)
-    } finally {
-      setLoading(false)
+  // Filter on category change
+  useEffect(() => {
+    if (selectedCategory && selectedCategory !== "all") {
+      const filtered = menuItems.filter(
+        (item) => item.category === selectedCategory
+      );
+      setFilteredItems(filtered);
+    } else {
+      setFilteredItems(menuItems);
     }
-  }
+  }, [selectedCategory, menuItems]);
 
-  const filteredItems = selectedCategory === 'All' 
-    ? menuItems 
-    : menuItems.filter(item => {
-        const categoryMap: { [key: string]: string } = {
-          'Smoothie Bowls': 'smoothie-bowls',
-          'Cold Press Juices': 'cold-press-juices',
-          'Vegan Wraps': 'vegan-wraps',
-          'Energy Shots': 'energy-shots'
-        }
-        return item.category === categoryMap[selectedCategory]
-      })
+  const handleAddToCart = (item: MenuItem) => {
+    addToCart({ menuItem: item, quantity: 1 });
+  };
 
   if (loading) {
     return (
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading delicious menu items...</p>
-          </div>
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading delicious options...</p>
         </div>
       </section>
-    )
+    );
   }
 
   return (
-    <section className="py-24 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
+    <section className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4">
+        {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Taste What <span className="text-emerald-600">Nature</span> Intended
+            Taste What Nature Intended
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Discover our signature collection of organic bowls, fresh juices, and energy-packed treats.
+            Discover our curated selection of organic, nutrient-rich bowls and
+            beverages.
           </p>
         </motion.div>
 
-        {/* Category Tabs */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-4 mb-12"
-        >
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`px-6 py-3 rounded-xl font-medium transition-all duration-200 ${
-                category === selectedCategory
-                  ? 'bg-emerald-500 text-white shadow-lg'
-                  : 'bg-white text-gray-700 hover:bg-emerald-50 hover:text-emerald-600'
+        {/* Category Filter */}
+        <div className="flex flex-wrap justify-center gap-4 mb-12">
+          {/* All */}
+          <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }}>
+            <Card
+              onClick={() => setSelectedCategory("all")}
+              className={`cursor-pointer flex items-center space-x-2 px-6 py-3 hover:shadow-lg transition-shadow duration-300 ${
+                selectedCategory === "all" ? "border-2 border-emerald-500" : ""
               }`}
             >
-              {category}
-            </button>
+              <span className="text-2xl">🌟</span>
+              <span className="font-medium text-gray-800">All</span>
+            </Card>
+          </motion.div>
+
+          {/* Dynamic Categories */}
+          {MENU_CATEGORIES.map((category, index) => (
+            <motion.div
+              key={category.id}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
+            >
+              <Card
+                onClick={() => setSelectedCategory(category.id)}
+                className={`cursor-pointer flex items-center space-x-2 px-6 py-3 hover:shadow-lg transition-shadow duration-300 ${
+                  selectedCategory === category.id ? "border-2 border-emerald-500" : ""
+                }`}
+              >
+                <span className="text-2xl">{category.emoji}</span>
+                <span className="font-medium text-gray-800">{category.name}</span>
+              </Card>
+            </motion.div>
           ))}
-        </motion.div>
+        </div>
 
         {/* Menu Grid */}
-        {filteredItems.length > 0 ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-            {filteredItems.map((item, index) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                <Card hover className="overflow-hidden h-full">
-                  <div className="relative">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-48 object-cover"
-                    />
-                    <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center space-x-1">
-                      <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                      <span className="text-sm font-medium">4.8</span>
-                    </div>
-                  </div>
-                  
-                  <div className="p-6">
-                    <div className="mb-2">
-                      <span className="text-sm text-emerald-600 font-medium capitalize">
-                        {item.category.replace('-', ' ')}
-                      </span>
-                    </div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{item.name}</h3>
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">{item.description}</p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-2xl font-bold text-emerald-600">₹{item.price}</span>
-                      <Button variant="outline" size="sm" className="group">
-                        Add to Cart
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                      </Button>
-                    </div>
-                  </div>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">No items found in this category.</p>
-            <p className="text-gray-400 mt-2">Check back soon for new additions!</p>
-          </div>
-        )}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {filteredItems.map((item, index) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true }}
+            >
+              <Card hover className="group overflow-hidden h-full">
+                <div className="relative overflow-hidden">
+                  <img
+                    src={item.imageUrl || `https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=400`}
+                    alt={item.name}
+                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => handleAddToCart(item)}
+                    className="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-emerald-500 hover:text-white"
+                  >
+                    <Plus className="w-5 h-5" />
+                  </motion.button>
+                </div>
 
-        {/* CTA */}
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-emerald-600 transition-colors duration-300">
+                    {item.name}
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-2">{item.description}</p>
+
+                  <div className="flex items-center space-x-4 mb-4">
+                    <div className="flex items-center space-x-1">
+                      <Star className="w-4 h-4 text-yellow-400 fill-current" />
+                      <span className="text-sm text-gray-600">4.8</span>
+                    </div>
+                    <div className="flex items-center space-x-1">
+                      <Clock className="w-4 h-4 text-gray-400" />
+                      <span className="text-sm text-gray-600">5–10 min</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-xl font-bold text-emerald-600">₹{item.price}</span>
+                    <Button onClick={() => handleAddToCart(item)} variant="primary" size="sm">
+                      Add to Cart
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* View All */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="text-center"
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mt-12"
         >
-          <Button variant="primary" size="lg" className="group">
-            View Full Menu
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </Button>
         </motion.div>
       </div>
     </section>
-  )
-}
+  );
+};
+
+export default MenuPreview;

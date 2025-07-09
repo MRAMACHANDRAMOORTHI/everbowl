@@ -148,6 +148,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     const initializeAuth = async () => {
       const { data: { session } } = await supabase.auth.getSession()
+      console.log('Initial session:', session?.user?.id);
+      
       const userId = session?.user?.id
       if (userId) await fetchUserProfile(userId)
       setLoading(false)

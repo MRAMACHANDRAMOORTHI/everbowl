@@ -1,14 +1,8 @@
-import * as React from 'react'
-import { AuthLayout } from '../components/auth/AuthLayout'
-import { LoginForm } from '../components/auth/LoginForm'
+import React from 'react';
+import LoginForm from '../components/auth/LoginForm';
 
-export const Login: React.FC = () => {
-  return (
-    <AuthLayout
-      title="Welcome Back, Foodie 🍴"
-      subtitle="Track your orders, customize your bowls, and earn rewards."
-    >
-      <LoginForm />
-    </AuthLayout>
-  )
-}
+const Login: React.FC = () => {
+  return <LoginForm />;
+};
+
+export default Login;

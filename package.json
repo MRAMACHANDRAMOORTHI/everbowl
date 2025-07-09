@@ -10,23 +10,21 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@react-three/drei": "^9.98.0",
-    "@react-three/fiber": "^8.17.1",
-    "@supabase/supabase-js": "^2.50.3",
+    "@hookform/resolvers": "^5.1.1",
+    "clsx": "^2.1.1",
+    "firebase": "^11.10.0",
     "framer-motion": "^12.23.0",
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-hook-form": "^7.60.0",
     "react-router-dom": "^7.6.3",
-    "three": "^0.170.0"
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
-    "@types/offscreencanvas": "^2019.7.3",
-    "@types/phoenix": "^1.6.6",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
-    "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.18",
     "eslint": "^9.9.1",

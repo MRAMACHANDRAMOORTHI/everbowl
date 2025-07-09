@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
 import { Layout } from "../components/common/Layout";
@@ -6,8 +6,58 @@ import { Card } from "../components/ui/Card";
 import { Button } from "../components/ui/Button";
 import { Input } from "../components/ui/Input";
 import { CONTACT_INFO } from "../utils/constants";
+import { db } from "../config/firebase"; // adjust path if needed
+import { collection, addDoc, Timestamp } from "firebase/firestore";
 
-export const Contact: React.FC = () => {
+const Contact: React.FC = () => {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  });
+
+  const [successMsg, setSuccessMsg] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      await addDoc(collection(db, "contact_messages"), {
+        ...formData,
+        createdAt: Timestamp.now(),
+      });
+
+      setSuccessMsg("🎉 Your message has been sent successfully!");
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: "",
+      });
+
+      setTimeout(() => setSuccessMsg(""), 5000);
+    } catch (error) {
+      console.error("Error sending message: ", error);
+      alert("Something went wrong! Please try again later.");
+    }
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   return (
     <Layout>
       <div className="pt-16">
@@ -40,6 +90,7 @@ export const Contact: React.FC = () => {
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
                 className="space-y-8"
               >
                 <div>
@@ -116,23 +167,63 @@ export const Contact: React.FC = () => {
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
               >
                 <Card className="p-8">
                   <h3 className="text-2xl font-bold text-gray-900 mb-6">
                     Send us a Message
                   </h3>
-                  <form className="space-y-6">
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <Input type="text" placeholder="First Name" required />
-                      <Input type="text" placeholder="Last Name" required />
+
+                  {successMsg && (
+                    <div className="text-green-600 bg-green-100 border border-green-400 px-4 py-2 rounded-lg mb-4">
+                      {successMsg}
                     </div>
-                    <Input type="email" placeholder="Email Address" required />
-                    <Input type="tel" placeholder="Phone Number" />
+                  )}
+
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <Input
+                        name="firstName"
+                        type="text"
+                        placeholder="First Name"
+                        value={formData.firstName}
+                        onChange={handleChange}
+                        required
+                      />
+                      <Input
+                        name="lastName"
+                        type="text"
+                        placeholder="Last Name"
+                        value={formData.lastName}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                    <Input
+                      name="email"
+                      type="email"
+                      placeholder="Email Address"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                    />
+                    <Input
+                      name="phone"
+                      type="tel"
+                      placeholder="Phone Number"
+                      value={formData.phone}
+                      onChange={handleChange}
+                    />
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Subject
                       </label>
-                      <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none">
+                      <select
+                        name="subject"
+                        value={formData.subject}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none"
+                      >
                         <option value="">Select a subject</option>
                         <option value="general">General Inquiry</option>
                         <option value="order">Order Support</option>
@@ -145,8 +236,11 @@ export const Contact: React.FC = () => {
                         Message
                       </label>
                       <textarea
+                        name="message"
                         rows={6}
                         placeholder="Tell us how we can help you..."
+                        value={formData.message}
+                        onChange={handleChange}
                         className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none resize-none"
                         required
                       />
@@ -157,7 +251,7 @@ export const Contact: React.FC = () => {
                       size="lg"
                       className="w-full"
                     >
-                      Send Message
+                      <span>Send Message</span>
                       <Send className="w-5 h-5" />
                     </Button>
                   </form>
@@ -174,6 +268,7 @@ export const Contact: React.FC = () => {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
               className="text-center mb-12"
             >
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Find Us</h2>
@@ -202,3 +297,5 @@ export const Contact: React.FC = () => {
     </Layout>
   );
 };
+
+export default Contact;
