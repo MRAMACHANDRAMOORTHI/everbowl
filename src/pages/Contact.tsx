@@ -10,6 +10,7 @@ import { db } from "../config/firebase"; // adjust path if needed
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 
 const Contact: React.FC = () => {
+  
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",

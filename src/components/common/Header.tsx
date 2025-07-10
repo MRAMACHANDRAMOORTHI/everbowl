@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ShoppingCart, User, Menu, X, Heart, LogOut } from 'lucide-react';
+import { ShoppingCart, User, Menu, X, Heart, LogOut, Leaf } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useCart } from '../../contexts/CartContext';
 
@@ -31,7 +31,7 @@ const Header: React.FC = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full flex items-center justify-center">
-              <Heart className="w-5 h-5 text-white" />
+              <Leaf className="w-5 h-5 text-white" />
             </div>
             <span className="text-xl font-bold text-gray-800">Ever Bowl</span>
           </Link>

@@ -1,8 +1,11 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Leaf, Heart, Users, Award } from 'lucide-react';
-import { Layout } from '../components/common/Layout';
-import { Card } from '../components/ui/Card';
+import React from "react";
+import { motion } from "framer-motion";
+import { Leaf, Heart, Users, Award } from "lucide-react";
+import { Layout } from "../components/common/Layout";
+import { Card } from "../components/ui/Card";
+import msr from "../assets/msr.jpg";
+import sudhan from "../assets/sudhan.jpeg";
+import Sanjay from "../assets/sanjay.jpg";
 
 const About: React.FC = () => {
   return (
@@ -177,24 +180,21 @@ const About: React.FC = () => {
                 {
                   name: "Sanjay Periyasamy",
                   role: "Founder & CEO",
-                  image:
-                    "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400",
+                  image: Sanjay, // ✅ FIXED
                   description:
                     "Visionary leader with years of experience in nutrition and organic food innovation, driving Ever Bowl's mission for healthy living.",
                 },
                 {
                   name: "Ramachandramoorthi",
                   role: "CTO & Co-Founder",
-                  image:
-                    "https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=400",
+                  image: msr, // ✅ FIXED
                   description:
                     "Tech architect building Ever Bowl's digital backbone, with deep expertise in full-stack development and real-time platform engineering.",
                 },
                 {
                   name: "Sanmuga Sudhan",
                   role: "Operations Manager",
-                  image:
-                    "https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=400",
+                  image: sudhan, // ✅ FIXED
                   description:
                     "Specialist in supply chain and logistics, ensuring sustainable sourcing and efficient operations across Ever Bowl's kitchen network.",
                 },

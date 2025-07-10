@@ -13,12 +13,14 @@ import { User } from '../types';
 interface AuthContextType {
   currentUser: FirebaseUser | null;
   userProfile: User | null;
+  setUserProfile: React.Dispatch<React.SetStateAction<User | null>>;
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
   signup: (name: string, email: string, password: string, address: string) => Promise<void>;
   logout: () => Promise<void>;
   isAdmin: boolean;
 }
+
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -82,6 +84,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const value = {
     currentUser,
     userProfile,
+    setUserProfile,
     loading,
     login,
     signup,
