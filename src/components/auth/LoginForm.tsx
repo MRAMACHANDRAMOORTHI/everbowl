@@ -152,7 +152,7 @@ const LoginForm: React.FC = () => {
                 to="/signup"
                 className="font-medium text-emerald-600 hover:text-emerald-500 transition-colors duration-200"
               >
-                Join the Tribe 🌱
+                Sign UP🌱
               </Link>
             </p>
           </div>
