@@ -14,7 +14,7 @@ const SignupForm: React.FC = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  
+
   const { signup } = useAuth();
   const navigate = useNavigate();
 
@@ -24,6 +24,24 @@ const SignupForm: React.FC = () => {
       [e.target.name]: e.target.value
     });
   };
+const getFriendlyErrorMessage = (code: string) => {
+    switch (code) {
+      case "auth/invalid-credential":
+        return "Invalid email or password";
+      case "auth/user-not-found":
+        return "No account found with this email. Please sign up.";
+      case "auth/wrong-password":
+        return "Invalid email or password. Please try again.";
+      case "auth/email-already-in-use":
+        return "This email is already registered.";
+      case "auth/weak-password":
+        return "Password should be at least 6 characters.";
+      case "auth/network-request-failed":
+        return "Network error. Please check your internet connection.";
+      default:
+        return "Something went wrong. Please try again later.";
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,10 +49,12 @@ const SignupForm: React.FC = () => {
     setError('');
 
     try {
-      await signup(formData.name, formData.email, formData.password, formData.address);
-      navigate('/dashboard');
+      const role = formData.email === 'admin@gmail.com' ? 'admin' : 'user';
+      await signup(formData.name, formData.email, formData.password, formData.address, role);
+      navigate(role === 'admin' ? '/admin/dashboard' : '/dashboard');
     } catch (error: any) {
-      setError(error.message || 'Failed to create account');
+      const code = error.code || 'auth/unknown-error';
+      setError(getFriendlyErrorMessage(code));
     } finally {
       setLoading(false);
     }
@@ -48,7 +68,6 @@ const SignupForm: React.FC = () => {
         transition={{ duration: 0.6 }}
         className="max-w-md w-full space-y-8"
       >
-        {/* Header */}
         <div className="text-center">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -68,7 +87,6 @@ const SignupForm: React.FC = () => {
           </motion.p>
         </div>
 
-        {/* Form */}
         <motion.form
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -83,7 +101,6 @@ const SignupForm: React.FC = () => {
           )}
 
           <div className="space-y-4">
-            {/* Name */}
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                 Full Name
@@ -105,7 +122,6 @@ const SignupForm: React.FC = () => {
               </div>
             </div>
 
-            {/* Email */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                 Email Address
@@ -127,7 +143,6 @@ const SignupForm: React.FC = () => {
               </div>
             </div>
 
-            {/* Password */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
                 Password
@@ -160,7 +175,6 @@ const SignupForm: React.FC = () => {
               </div>
             </div>
 
-            {/* Address */}
             <div>
               <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-2">
                 Delivery Address
@@ -183,7 +197,6 @@ const SignupForm: React.FC = () => {
             </div>
           </div>
 
-          {/* Submit Button */}
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -201,7 +214,6 @@ const SignupForm: React.FC = () => {
             )}
           </motion.button>
 
-          {/* Sign In Link */}
           <div className="text-center">
             <p className="text-sm text-gray-600">
               Already have an account?{' '}

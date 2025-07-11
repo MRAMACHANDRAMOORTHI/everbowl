@@ -15,6 +15,25 @@ const LoginForm: React.FC = () => {
   const { login, isAdmin } = useAuth();
   const navigate = useNavigate();
 
+  const getFriendlyErrorMessage = (code: string) => {
+    switch (code) {
+      case "auth/invalid-credential":
+        return "Invalid email or password";
+      case "auth/user-not-found":
+        return "No account found with this email. Please sign up.";
+      case "auth/wrong-password":
+        return "Invalid email or password. Please try again.";
+      case "auth/email-already-in-use":
+        return "This email is already registered.";
+      case "auth/weak-password":
+        return "Password should be at least 6 characters.";
+      case "auth/network-request-failed":
+        return "Network error. Please check your internet connection.";
+      default:
+        return "Something went wrong. Please try again later.";
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -32,7 +51,8 @@ const LoginForm: React.FC = () => {
         navigate("/dashboard");
       }
     } catch (error: any) {
-      setError(error.message || "Failed to login");
+      const code = error.code || "auth/unknown-error";
+      setError(getFriendlyErrorMessage(code));
     } finally {
       setLoading(false);
     }

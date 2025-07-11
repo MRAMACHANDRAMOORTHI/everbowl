@@ -16,7 +16,7 @@ interface AuthContextType {
   setUserProfile: React.Dispatch<React.SetStateAction<User | null>>;
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
-  signup: (name: string, email: string, password: string, address: string) => Promise<void>;
+  signup: (name: string, email: string, password: string, address: string, role?:'admin' | 'user') => Promise<void>;
   logout: () => Promise<void>;
   isAdmin: boolean;
 }
@@ -42,7 +42,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     await signInWithEmailAndPassword(auth, email, password);
   };
 
-  const signup = async (name: string, email: string, password: string, address: string) => {
+  const signup = async (name: string, email: string, password: string, address: string, role : 'admin' | 'user'='user') => {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
     
@@ -51,6 +51,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       name,
       email,
       address,
+      role,
       favoriteItems: []
     };
     
