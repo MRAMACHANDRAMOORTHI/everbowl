@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { ShoppingCart, User, Menu, X, Heart, LogOut, Leaf } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useCart } from "../../contexts/CartContext";
-
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -32,7 +31,7 @@ const Header: React.FC = () => {
           <Link to="/" className="flex items-center space-x-2">
             <div className="w-80 h-10 rounded-full overflow-hidden">
               <img
-                src="/src/assets/EverBowl.png"
+                src="/EverBowl.png"
                 alt="Ever Bowl Logo"
                 className="w-full h-full object-cover"
               />
